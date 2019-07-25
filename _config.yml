@@ -1,4 +1,6 @@
 
+exclude: [ README.md, serve.sh, Gemfile, Gemfile.lock ]
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
