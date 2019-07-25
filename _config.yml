@@ -1,5 +1,5 @@
 
-exclude: [ README.md, serve.sh, Gemfile, Gemfile.lock ]
+exclude: [ README.md, run.sh, Gemfile, Gemfile.lock ]
 
 plugins:
   - jekyll-feed
