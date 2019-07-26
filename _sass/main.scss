@@ -1,3 +1,47 @@
-.current {
-  color: green;
+$font-stack: Helvetica, sans-serif;
+$font-size: 14pt;
+$main-color: #333;
+$secondary-color: #555;
+
+body {
+  font: 100% $font-stack;
+  color: $main-color;
+  font-size: $font-size;
+
+  transition: color .15s ease-in-out;
+}
+
+.about {
+  margin: 2rem;
+  margin-bottom: 4rem;
+
+  a {
+    color: $main-color;
+    text-decoration: none;
+  }
+}
+
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 35rem;
+}
+
+.posts {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    color: $secondary-color;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $main-color;
+  }
+
+  li {
+    margin-bottom: 2rem;
+  }
 }

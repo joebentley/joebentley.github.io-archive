@@ -8,7 +8,9 @@
     {% seo %}
   </head>
   <body>
-    {% include navigation.html %}
-    {{ content }}
+    <div class="content">
+      {% include about-header.html %}
+      {{ content }}
+    </div>
   </body>
 </html>
