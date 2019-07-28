@@ -1,19 +1,21 @@
 ---
 ---
 
-PHOTOSENSITIVE EPILEPSY WARNING: this game contains bright white screen flashes
-if the bomb (x button) is used
+Recently I have been on a bit of an indie game development kick and decided that
+I'd go and make some basic stuff in Unity. My game of choice was a simple 2D
+Asteroid clone, however it became clear for a few reasons I won't go into here
+that the 2D aspects of Unity are somewhat shoehorned into the engine.
+
+---
+
+_PHOTOSENSITIVE EPILEPSY WARNING:_ this game contains bright white screen
+flashes if the bomb (x button) is used
 
 The game discussed in this project can be found on [my github
 page](https://github.com/joebentley), probably under a name like ["Three Button
 Shooter"](https://github.com/joebentley/ThreeButtonShooter). You can [download
 the game
 here](https://github.com/joebentley/ThreeButtonShooter/releases/tag/v1.0).
-
-Recently I have been on a bit of an indie game development kick and decided that
-I'd go and make some basic stuff in Unity. My game of choice was a simple 2D
-Asteroid clone, however it became clear for a few reasons I won't go into here
-that the 2D aspects of Unity are somewhat shoehorned into the engine.
 
 I knew that my main interest lay in short game-jam style games, as I love that
 they can convey a unique aesthetic and gameplay mechanic without needing it

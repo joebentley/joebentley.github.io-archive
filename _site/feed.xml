@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-07-28T20:31:55+02:00</updated><id>/feed.xml</id><title type="html">joebentley.github.io</title><subtitle>github blog</subtitle><entry><title type="html">First Experiences With Godot</title><link href="/2019/07/26/first-experiences-with-godot.html" rel="alternate" type="text/html" title="First Experiences With Godot" /><published>2019-07-26T00:00:00+02:00</published><updated>2019-07-26T00:00:00+02:00</updated><id>/2019/07/26/first-experiences-with-godot</id><content type="html" xml:base="/2019/07/26/first-experiences-with-godot.html">&lt;p&gt;PHOTOSENSITIVE EPILEPSY WARNING: this game contains bright white screen flashes
-if the bomb (x button) is used&lt;/p&gt;
-
-&lt;p&gt;The game discussed in this project can be found on &lt;a href=&quot;https://github.com/joebentley&quot;&gt;my github
-page&lt;/a&gt;, probably under a name like &lt;a href=&quot;https://github.com/joebentley/ThreeButtonShooter&quot;&gt;“Three Button
-Shooter”&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Recently I have been on a bit of an indie game development kick and decided that
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-07-28T20:48:08+02:00</updated><id>/feed.xml</id><title type="html">joebentley.github.io</title><subtitle>github blog</subtitle><entry><title type="html">First Experiences With Godot</title><link href="/2019/07/26/first-experiences-with-godot.html" rel="alternate" type="text/html" title="First Experiences With Godot" /><published>2019-07-26T00:00:00+02:00</published><updated>2019-07-26T00:00:00+02:00</updated><id>/2019/07/26/first-experiences-with-godot</id><content type="html" xml:base="/2019/07/26/first-experiences-with-godot.html">&lt;p&gt;Recently I have been on a bit of an indie game development kick and decided that
 I’d go and make some basic stuff in Unity. My game of choice was a simple 2D
 Asteroid clone, however it became clear for a few reasons I won’t go into here
 that the 2D aspects of Unity are somewhat shoehorned into the engine.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;PHOTOSENSITIVE EPILEPSY WARNING:&lt;/em&gt; this game contains bright white screen
+flashes if the bomb (x button) is used&lt;/p&gt;
+
+&lt;p&gt;The game discussed in this project can be found on &lt;a href=&quot;https://github.com/joebentley&quot;&gt;my github
+page&lt;/a&gt;, probably under a name like &lt;a href=&quot;https://github.com/joebentley/ThreeButtonShooter&quot;&gt;“Three Button
+Shooter”&lt;/a&gt;. You can &lt;a href=&quot;https://github.com/joebentley/ThreeButtonShooter/releases/tag/v1.0&quot;&gt;download
+the game
+here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;I knew that my main interest lay in short game-jam style games, as I love that
 they can convey a unique aesthetic and gameplay mechanic without needing it
@@ -365,4 +369,4 @@ experienced programmer.&lt;/p&gt;
 &lt;p&gt;Overall I think that it is one of the best options for getting started with 2D
 game development. It could be daunting to start with, but games are complicated!&lt;/p&gt;
 
-&lt;p&gt;Next, I will learn PICO-8&lt;/p&gt;</content><author><name></name></author><summary type="html">PHOTOSENSITIVE EPILEPSY WARNING: this game contains bright white screen flashes if the bomb (x button) is used</summary></entry></feed>
+&lt;p&gt;Next, I will learn PICO-8&lt;/p&gt;</content><author><name></name></author><summary type="html">Recently I have been on a bit of an indie game development kick and decided that I’d go and make some basic stuff in Unity. My game of choice was a simple 2D Asteroid clone, however it became clear for a few reasons I won’t go into here that the 2D aspects of Unity are somewhat shoehorned into the engine.</summary></entry></feed>
