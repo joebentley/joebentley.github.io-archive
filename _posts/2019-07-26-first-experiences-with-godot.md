@@ -1,0 +1,378 @@
+---
+---
+
+PHOTOSENSITIVE EPILEPSY WARNING: this game contains bright white screen flashes
+if the bomb (x button) is used
+
+The game discussed in this project can be found on [my github
+page](https://github.com/joebentley), probably under a name like ["Three Button
+Shooter"](https://github.com/joebentley/ThreeButtonShooter).
+
+Recently I have been on a bit of an indie game development kick and decided that
+I'd go and make some basic stuff in Unity. My game of choice was a simple 2D
+Asteroid clone, however it became clear for a few reasons I won't go into here
+that the 2D aspects of Unity are somewhat shoehorned into the engine.
+
+I knew that my main interest lay in short game-jam style games, as I love that
+they can convey a unique aesthetic and gameplay mechanic without needing it
+to stay fresh over many hours of gameplay. Naturally I decided that I would
+prefer to stick to 2D initially due to the simplicity in both game design
+and technical complexity.
+
+My initial choice was going to be Gamemaker, but I am a good programmer and knew
+that it would make more sense using something that required more scripting. I
+still reckon it's a great option, and I'll probably check it again in the
+future. I have been a part of the Godot Facebook group for more than a year, but
+I've never tried it, and I read that it was designed with 2D in mind. This, plus
+the great multiplatform support, plus the liberal license, was enough for me to
+choose Godot.
+
+In this article I will talk in detail about what it was like to create various
+components within my game and bring them together. I will go through each
+component one by one and talk about the pains and joys of implementing them. I'm
+mainly just writing this for fun and since I'm on holiday as something to engage
+my brain, but maybe someone will read it and find it somewhat interesting.
+
+## The Game
+
+<img src="/assets/images/game.png"
+  alt="A full screen shot of the game in action. On the screen there is a single
+  enemy, the player travelling downwards, the score shown at the top left, and
+  the remaining number of bombs at the bottom right. Along the bottom the three
+  buttons can be seen in a row."
+  width="50%">
+
+As any hobbyist in a creative art knows, it can be super hard to decide on a
+project with the right balance of scope and novelty. There is no secret, I just
+had some inspiration.
+
+I saw a game jam theme--the oblique strategies of video games--and found the
+theme: [3-button, 3-color games](https://itch.io/jam/ssj3button3color).
+
+My vision was to "re-create" my previous Asteroids game, but somehow using just
+three buttons: z, x, and c. I thought it was obvious one button should be fire,
+and another should turn the ship. Then I thought, this is actually enough: have
+the ship moving forward at a constant velocity and use a button to turn (z) and
+a button to fire (c).
+
+The game is called "ThreeButtonShooter". I'm sorry I didn't come up with a
+real name.
+
+I knew that the only way that the game would be fun is to turn by 90 degrees at
+a time, which I thought would make for some cool tense gameplay. I decided here
+that the enemies should probably only move in the cardinal directions too.
+
+At first, I thought maybe x could be used to "pause" the ship's motion, however
+I found in "play-testing" that I never used this, so I decided to make it deploy
+a bomb instead.
+
+## First Impressions
+
+In this section I will give my first impressions of the engine and its "style".
+Feel free to skip to the more practical stuff in the next section if this
+doesn't interest you.
+
+First I read all the tutorials on the Godot website, which were pretty good
+overall. They pretty much covered everything that I needed to know, although
+there were a lot of them I have to admit. That isn't a bad thing, but of course
+they could become out of date quite quickly.
+
+I will compare a lot with Unity here. Of course I was surprised that the
+architecture was so different. Unity has quite a simple entity-component system,
+with vague `GameObjects`s as entities and `MonoBehaviour`s as components. This
+is super simple to work with in very simple cases, but tree-like nesting of
+`GameObject`s can be hard to handle programmatically.
+
+On the other hand, Godot and its default language GDScript (the only one I used)
+has a very strict emphasis on the tree structure of its `Node`s. It has a clear
+programmatic model for working with nested nodes in a tree, to the point of
+having a first class syntax for getting a node from the tree (`$SubNode` vs
+`getNode('SubNode')`).
+
+However, Godot does not have an entity-component system. Instead, the nodes you
+add to the tree are instances of various other nodes, which are extended from
+other nodes. For example, adding a new sprite is done by adding an instance of
+the `Sprite` node, which inherits from `Node2D`, which inherits from
+`CanvasItem`, then from `Node`, then from `Object`.
+
+The inheritance chains can get *pretty long* for most objects in Godot. Now, I'm
+not going to claim that inheritance is unilaterally a "bad thing", but it can be
+pretty weird to understand exactly what functionality `Node2D` is giving me that
+`Node` isn't, especially for a new user to the engine that is not particularly
+used to this kind of programming style.
+
+The way that custom behaviours work is also kind of strange. Let's take
+something very basic: moving a sprite in a straight line at a constant velocity.
+First we add a `Sprite` (for example) to the scene. Then we attach a script to
+it that _extends_ the `Sprite` _class_. GDScript makes this pretty simple
+looking in code by making the `class` keyword implicit,
+
+```
+extends Sprite
+
+# called every frame
+func _process(delta):
+    position += Vector2(1, 0)
+```
+
+There is a big downside to this approach however: you cannot easily create
+reusable behaviours that can be attached to different objects, and you cannot
+easily (or at all?) split monolithic behaviours into many different separate
+behaviours. Usually this just means that collision logic gets mixed with
+movement logic, but this lack of flexibility was definitely a surprise coming
+from Unity.
+
+<!-- One key difference between Unity and Godot is that instead of prefabs we have
+scenes, which are basically parts of the tree of nodes cut off at a single point
+and bundled into a reusable package. Basically the same concept as prefabs. -->
+
+The editor was a great surprise to me. It is actually a Godot game itself, but
+it is super snappy and responsive. Probably the best advertisement for the Godot
+engine itself. One really cool consequence is the ability to pretty instantly
+jump into the game without a weird pause like in Unity, and also the individual
+scenes that make up the game e.g. the player, or an enemy, can be quickly tested
+in isolation.
+
+As a bonus, the built-in text editor is really incredible, with a snappy
+built-in documentation viewer.
+
+## Game Elements
+
+So now let's discuss how I implemented various elements of the game. For the
+most part this was pretty simple, but there are some things that were
+easier/harder than I expected.
+
+### The Buttons
+
+The game takes place inside a faux-arcade cabinet in a lofi pastel coloured
+world. Something like [BMO](https://adventuretime.fandom.com/wiki/BMO). My first
+instinct was to make pixel-art buttons that are incredibly tactile, and so I
+knew I needed press and depress sounds.
+
+At first I tried to implement this using the `TextureButton` node, however I
+wanted the buttons to be controlled by either clicking them _or_ by using the
+corresponding keyboard key (z, x, or c). I used the `_input(event)` callback to
+listen for the key press, but there is no easy way to simulate clicking the
+button programmatically. I tried faking a mouse click event but unfortunately
+this became kind of brittle when two buttons were pressed at the same time.
+
+I decided to roll my own version of `TextureButton` instead, extending
+`TextureRect`. This was actually super easy by hijacking `_gui_input(event)` and
+listening for click events, changing the texture programmatically. It will
+automatically only observe click events that are within the object's bounding
+rectangle.
+
+<figure>
+  <img src="/assets/images/button.gif" alt="A GIF showing the button being
+  pressed." width="30%">
+  <figcaption>A GIF showing the z button being pressed. The clicking sound is not possible for the GIF :)</figcaption>
+</figure>
+
+While it was much simpler than expected to set up my own reusable replacement
+for the `TextureButton`, I don't think it was super obvious from the
+`TextureButton` API docs that I would need to do this. The API docs have a
+"Description" section, but it is usually very brief, and doesn't go in depth on
+the capabilities of the object.
+
+Finally, I would like to mention here one of my _favourite_ features of Godot:
+the UI system. It is incredibly rich, modern, and versatile, and I was shocked
+at how incredibly easy it is to build a great looking responsive UI. Everything
+can be constructed based on ratios and horizontal/vertical containers. This is
+definitely an upgrade from Unity, where many people seem to end up rolling their
+own hackish UI system.
+
+### The Game scene
+
+For the faux-arcade look I knew I needed a main game screen that was inset into
+the cabinet via a margin on all sides, and leaving room at the bottom for the
+buttons. This was super easy using a simple `ColorRect` node. Placing the rect
+properly was super easy using snapping (which snaps to a 10 pixel coarse grid).
+
+For the in-game content on the imaginary cabinet screen I just used a `Control`
+node set to layout mode "Full Rect" which fills the parent node, and then using
+the "Clip Content" property so that sprites outside the rectangle are clipped.
+
+Overall I found that using mostly nodes that extend `Control` (all coloured in
+green) makes it super easy to place them perfectly on the screen. In fact, for
+all static nodes that aren't a part of the main gameplay I ended up using
+`Control` nodes. It simply seems like a better choice.
+
+<!-- There is a downside to `Control` nodes. They don't have a z-index setting, and
+are painted purely in the ordering within the tree. This is obviously fine for
+the most part, but when we introduce `Node2D` items which _do_ have a z-index,
+it can get messy. For example, we may have bullets that should spawn below the
+player sprite, so we give them a lower z-index  -->
+
+### The Player
+
+The player was mostly easy. I extended a `Sprite` to move with a constant
+velocity in the current facing direction and to hold an internal state that
+changes when any of z, x, or c are pressed.
+
+There were two main issues here.
+
+First, I had not initially thought of collision detection. Collision detection
+in Godot is incredibly simple. We simply use an `Area2D` node, and add a
+`CollisionShape2D` as a child which defines the shape of the collision box. The
+`Area2D` emits a signal which you can connect to whenever another `Area2D`
+enters it. However, the `Sprite` (which I initially extended to add behaviour
+to) should be a child of the `Area2D` node.
+<!-- I could have left the script on the
+`Sprite`, however it had a bunch of export variables (variables that can be set
+in the editor inspector) which would not be visible when the parent `Area2D` is
+instanced into a scene. -->
+This meant I basically had to extend the `Area2D` instead of the `Sprite`, and
+so had to do some refactoring. This is okay for the most part, but having to
+re-parent stuff like this and write more code is quite common in Godot.
+
+A bigger issue is how to fire bullets. Bullets themselves are obvious: just move
+in a single cardinal direction at a constant speed. However, to which scene do
+we add them to when we instance them in the `Player`? In the end I had to end up
+taking a `NodePath` in as an export variable (a variable that can be set in the
+inspector), however this broke the `Player` scene when it is ran in isolation. I
+can't be bothered to add a bunch of checks to make sure the scene runs in both
+the entire game as a whole, as well as individually on its own.
+
+IMO, surely spawning an object into the "main scene" is a very common
+occurrence, but in Godot you often set up _your own_ "main scene" as discussed
+in the previous section. In the end, you solve it as you would in Unity: by
+using a
+[singleton](https://docs.godotengine.org/en/3.1/getting_started/step_by_step/singletons_autoload.html)
+to spawn the bullet or a hard coded reference to the "main scene", but in Godot
+this just feels kind of "wrong" to do.
+
+Finally, a similar situation with the bullets themselves. The bullet colliding
+with the enemy is when we should increment the score, destroy the enemy, and
+play the enemy destroy sound, and so we do this in the `Bullet` script which
+again extends `Area2D`. This is all easy, except that naturally we want the
+bullet to be an entire pre-packaged thing on its own, and so it makes sense for
+the enemy destroy sound to be a child node of the `Bullet` node. This doesn't
+work, because when the bullet is destroyed the audio instantly stops playing as
+soon as it starts. Obviously the sound would just have to be in the main game
+again, then I gave up this time and hard-coded the reference:
+`get_node("/root/Window/EnemyHitSound")`. I discuss an alternative resolution to
+this in the section titled "The Bomb".
+
+I wanted the player to wrap around at the edges of the screen like in Asteroids.
+This was clunky in Unity, because you have to do some whacky transforms to work
+out where the edges of the screen are in world space. This was **much** easier
+in Godot, as we can use the simple pixel-based coordinate system! Nice!
+
+### The Enemies
+
+<figure>
+  <img src="/assets/images/enemies.png" width="50%"
+    alt="Image showing the two enemy sprites in the game" />
+  <figcaption>The two enemy sprites in the game. The bubble enemy is the slower,
+  easier enemy, while the bee is faster and awards more points.</figcaption>
+</figure>
+
+The enemies themselves were simple, just moved in a straight line. So far only
+two enemies: a slower enemy `MovingEnemy` and a rarer faster one
+`FasterMovingEnemy` (obviously extending `MovingEnemy`) that gives more points
+when killed.
+
+I extended another `Control` node to act as an enemy spawner. It takes a bunch
+of parameters, such as initial time between spawn, how often to decrease time
+between spawn and how much by (making the game harder with time), which enemy
+scene to spawn.
+
+Not much to talk about here as it was all very easy and straightforward, and
+similar to how it would be done in other engines.
+
+### The Bomb
+
+<figure>
+  <img src="/assets/images/bomb.gif" alt="Slowed down image showing the bomb
+  explosion effect" width="50%">
+  <figcaption>A GIF of the bomb explosion effect, slowed down by 400% so that the very fast white screen strobe effect can be seen. The sound effect obviously cannot be heard</figcaption>
+</figure>
+
+As mentioned previously, I wasn't totally sure what to do with the x button. I
+took the easy way out and decided to make it a bomb. I knew I wanted a good
+impact with the bomb and had it in my head that I wanted some kind of flashing
+white screen effect that was synced with white noise explosion sound bursts.
+
+The way I implemented the flash was to use a white square over the entire game
+area and changing the opacity with time. To trigger the effect we simply call a
+global function which emits a signal. We connect the "screen flash" rectangle to
+the signal emitted by the global function.
+
+This is basically another way of connecting two different scenes in the tree. We
+could potentially use a similar approach to instance bullets as discussed above.
+Instead of having the Player script be in charge of spawning the bullets, we
+could call a global function that emits a "spawn bullet" signal with the
+position and direction as arguments. We could then handle this wherever in some
+more suitable script.
+
+### Game Over and the High Score System
+
+When the player collides with an enemy, the game is over and we go to the
+`GameOverScreen`. Switching scenes is easy (if a little manual, but that's
+okay).
+
+I knew I wanted a high score system to track the five highest scores along with
+three initials. Godot makes available a temp directory `user://` where files can
+be stored that persist between sessions, where I could store a high score file.
+So the first task was to check if the player's current score counted as new high
+score.
+
+I didn't like this bit. The reason is because of GDScript. It obviously looks a
+lot like Python, so subconsciously there is the (false, maybe entitled)
+expectation that programming in it will be kind of like Python. Well, file IO
+and handling and parsing strings from a file has that fall flat pretty quickly.
+Basically everything has to be done in a very procedural style, because GDScript
+does not even have first class functions for some reason (??). I think in this
+part I am just spoilt by how good mainstream general purpose languages like
+Python are. Most people will not have any issue with this and will simply get on
+with it and write the code, but this is a part where I definitely wished that I
+could use a different language. GDScript is really excellent for programming
+video game logic, but I would not personally want to use it for accessing a
+database, networking, or anything web related.
+
+Once I got over my personal issues here, everything else was pretty uneventful
+and easy. Reading from and writing to the file was very simple. I show a simple
+high score leaderboard on the initial screen of the game, which was very easy to
+set up using the UI nodes and aligning to left and right.
+
+<figure>
+<img src="/assets/images/leaderboard.png" alt="The leaderboard shown at the
+start of the game" width="50%">
+<figcaption>The leaderboard read from the locally stored high score file.</figcaption>
+</figure>
+
+## Summary
+
+I think Godot is a really great engine with a great integrated development
+environments. There are definitely some things that took longer than I thought,
+but for the most part these arise from lack of documentation rather than missing
+functionality. For the most part I was incredibly impressed with the included
+functionality, particularly the incredible UI library, especially compared to
+Unity.
+
+One stand-out feature, _collision detection_, was particularly easy to use, and
+something I never had any issue with. It was also super easy and intuitive to
+set up. I didn't really need to read the documentation once.
+
+Another thing I did not mention or get a chance to use was the incredible shader
+support built-in to the engine. Both the usual material vertex and fragment
+shaders as well as screen-reading shaders (screen effects) are very well
+supported in Godot, and again are super easy and intuitive to set up. Hopefully
+I will get to use this on another project.
+
+Finally, something I did not particularly emphasise enough, is that it is very
+quick and easy to create simple custom nodes due to the syntactic sugar designed
+to reduce the amount of code. In my experience, similarly small objects and
+behaviours in Unity end up feeling a little "larger" in a conceptual sense.
+
+My only real complaints stem from the somewhat open programming style. It is
+very easy to shoot yourself in the foot early on because you did something in
+not quite the right way, leading to some refactoring (could be a little, could
+be a _lot_). I also think the GDScript language does not hold up so well as a
+general purpose programming language, at least from the perspective of an
+experienced programmer.
+
+Overall I think that it is one of the best options for getting started with 2D
+game development. It could be daunting to start with, but games are complicated!
+
+Next, I will learn PICO-8

@@ -1,5 +1,6 @@
 $font-stack: Helvetica, sans-serif;
 $font-size: 14pt;
+$smaller-font-size: 12pt;
 $main-color: #333;
 $secondary-color: #555;
 
@@ -43,5 +44,31 @@ body {
 
   li {
     margin-bottom: 2rem;
+  }
+}
+
+.post {
+  // align images that aren't in figures in center
+  img {
+    margin: 2rem auto;
+    display: block;
+  }
+
+  // align figures in center
+  figure {
+    text-align: center;
+
+    // margin around images in figures
+    img {
+      margin: 1rem auto;
+    }
+
+    figcaption {
+      color: $secondary-color;
+      font-size: $smaller-font-size;
+      // font-style: italic;
+      margin: 0 auto;
+      max-width: 25rem;
+    }
   }
 }
