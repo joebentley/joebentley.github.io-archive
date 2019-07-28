@@ -1,6 +1,6 @@
 $font-stack: Helvetica, sans-serif;
-$font-size: 14pt;
-$smaller-font-size: 12pt;
+$font-size: 16pt;
+$smaller-font-size: 14pt;
 $main-color: #333;
 $secondary-color: #555;
 
@@ -25,7 +25,7 @@ body {
 .content {
   margin-left: auto;
   margin-right: auto;
-  max-width: 35rem;
+  max-width: 44rem;
 }
 
 .posts {
@@ -48,6 +48,8 @@ body {
 }
 
 .post {
+  max-width: 34rem;
+
   // align images that aren't in figures in center
   img {
     margin: 2rem auto;
