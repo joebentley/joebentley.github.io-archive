@@ -6,6 +6,6 @@ It's my blog!
 TODO
 ----
 
-- [ ] Style blog
+- [x] Style blog
 - [ ] Set up Travis CI
-- [ ] Write first post
+- [x] Write first post
