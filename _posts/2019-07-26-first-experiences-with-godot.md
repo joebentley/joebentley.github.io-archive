@@ -50,7 +50,7 @@ As any hobbyist in a creative art knows, it can be super hard to decide on a
 project with the right balance of scope and novelty. There is no secret, I just
 had some inspiration.
 
-I saw a game jam theme--the oblique strategies of video games--and found the
+I saw a game jam theme---the oblique strategies of video games---and found the
 theme: [3-button, 3-color games](https://itch.io/jam/ssj3button3color).
 
 My vision was to "re-create" my previous Asteroids game, but somehow using just

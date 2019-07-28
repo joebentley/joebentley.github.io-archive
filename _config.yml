@@ -16,8 +16,3 @@ defaults:
       path: ""
     values:
       layout: "default"
-
-markdown: redcarpet
-
-redcarpet:
-  extensions: ['smart']

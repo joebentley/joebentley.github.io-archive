@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-07-28T20:48:08+02:00</updated><id>/feed.xml</id><title type="html">joebentley.github.io</title><subtitle>github blog</subtitle><entry><title type="html">First Experiences With Godot</title><link href="/2019/07/26/first-experiences-with-godot.html" rel="alternate" type="text/html" title="First Experiences With Godot" /><published>2019-07-26T00:00:00+02:00</published><updated>2019-07-26T00:00:00+02:00</updated><id>/2019/07/26/first-experiences-with-godot</id><content type="html" xml:base="/2019/07/26/first-experiences-with-godot.html">&lt;p&gt;Recently I have been on a bit of an indie game development kick and decided that
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-07-28T20:51:51+02:00</updated><id>/feed.xml</id><title type="html">joebentley.github.io</title><subtitle>github blog</subtitle><entry><title type="html">First Experiences With Godot</title><link href="/2019/07/26/first-experiences-with-godot.html" rel="alternate" type="text/html" title="First Experiences With Godot" /><published>2019-07-26T00:00:00+02:00</published><updated>2019-07-26T00:00:00+02:00</updated><id>/2019/07/26/first-experiences-with-godot</id><content type="html" xml:base="/2019/07/26/first-experiences-with-godot.html">&lt;p&gt;Recently I have been on a bit of an indie game development kick and decided that
 I’d go and make some basic stuff in Unity. My game of choice was a simple 2D
 Asteroid clone, however it became clear for a few reasons I won’t go into here
 that the 2D aspects of Unity are somewhat shoehorned into the engine.&lt;/p&gt;
@@ -42,7 +42,7 @@ my brain, but maybe someone will read it and find it somewhat interesting.&lt;/p
 project with the right balance of scope and novelty. There is no secret, I just
 had some inspiration.&lt;/p&gt;
 
-&lt;p&gt;I saw a game jam theme–the oblique strategies of video games–and found the
+&lt;p&gt;I saw a game jam theme—the oblique strategies of video games—and found the
 theme: &lt;a href=&quot;https://itch.io/jam/ssj3button3color&quot;&gt;3-button, 3-color games&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;My vision was to “re-create” my previous Asteroids game, but somehow using just
