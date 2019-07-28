@@ -6,7 +6,9 @@ if the bomb (x button) is used
 
 The game discussed in this project can be found on [my github
 page](https://github.com/joebentley), probably under a name like ["Three Button
-Shooter"](https://github.com/joebentley/ThreeButtonShooter).
+Shooter"](https://github.com/joebentley/ThreeButtonShooter). You can [download
+the game
+here](https://github.com/joebentley/ThreeButtonShooter/releases/tag/v1.0).
 
 Recently I have been on a bit of an indie game development kick and decided that
 I'd go and make some basic stuff in Unity. My game of choice was a simple 2D
