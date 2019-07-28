@@ -347,8 +347,8 @@ start of the game" width="50%">
 
 ## Summary
 
-I think Godot is a really great engine with a great integrated development
-environments. There are definitely some things that took longer than I thought,
+I think Godot is a really great engine with a well integrated development
+environment. There are definitely some things that took longer than I thought,
 but for the most part these arise from lack of documentation rather than missing
 functionality. For the most part I was incredibly impressed with the included
 functionality, particularly the incredible UI library, especially compared to
